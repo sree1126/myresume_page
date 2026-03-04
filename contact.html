@@ -83,17 +83,13 @@
 				<br/><br/>
 				<p class="big-2text">CONTACT FORM</p><br/>
 
-				<form action="https://formsubmit.co/nivas.aiops@gmail.com" method="POST">
-
+				<form action="https://formsubmit.co/nivas.aiops@gmail.com" method="POST" data-netlify="true">
 				    <!-- Disable Captcha (optional) -->
 				    <input type="hidden" name="_captcha" value="false">
-
 				    <!-- Email Subject -->
 				    <input type="hidden" name="_subject" value="New Contact Request from Website!">
-
 				    <!-- Redirect After Submit -->
 				    <input type="hidden" name="_next" value="https://yourwebsite.com/thankyou.html">
-
 				    <div class="form-row">
 				        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				            <input type="text" name="Full Name" class="form-control" placeholder="Full Name *" required>
@@ -102,7 +98,6 @@
 				            <input type="email" name="Email" class="form-control" placeholder="Email Address *" required>
 				        </div>
 				    </div>
-
 				    <div class="form-row">
 				        <div class="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				            <input type="tel" name="Contact Number" class="form-control" placeholder="Contact Number *" required>
@@ -137,9 +132,49 @@
 				            </button>
 				        </div>
 				    </div>
-
 				</form>
+				<div id="successMessage" style="
+						display:none;
+						position:fixed;
+						top:20px;
+						right:20px;
+						background:#28a745;
+						color:white;
+						padding:15px 25px;
+						border-radius:5px;
+						box-shadow:0 0 10px rgba(0,0,0,0.2);
+						z-index:9999;">
+						Message has been sent successfully!
 				</div>
+				<script>
+					document.getElementById("contactForm").addEventListener("submit", function(e) {	e.preventDefault();
+						var form = this;
+    				var data = new FormData(form);
+
+    				fetch(form.action, {
+        			method: form.method,
+        			body: data,
+        			headers: {
+            	'Accept': 'application/json'
+        		}
+    				}).then(response => {
+        		if (response.ok) {
+            		document.getElementById("successMessage").style.display = "block";
+            		form.reset();
+
+            		setTimeout(function(){
+                	document.getElementById("successMessage").style.display = "none";
+            		}, 5000);
+        		} else {
+            		alert("Error sending message. Please try again.");
+        			}
+    				}).catch(error => {
+        			alert("Network error.");
+    				});
+					});
+				</script>
+			</div>
+
 				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 embed-responsive embed-responsive-16by9 z-depth-1-half">
 					<!--<img src="images/address.jpg" class="img-responsive img-project" alt="Sree address" width="600" height="auto">-->
 					<!-- Google-Map -->
